@@ -5,16 +5,20 @@ Considere uma aplicação que gerencia dados sobre médicos, pacientes e consula
 sendo que:
 
 1. Cada médico possui os seguintes dados:
+   
     a. Nome (string)
+   
     b. Código (valor inteiro): número único de identificação do médico
+   
     c. Lista de pacientes
+   
 
-2. Cada paciente possui os seguintes dados:
+3. Cada paciente possui os seguintes dados:
     a. Nome (string)
     b. CPF (número de 9 dígitos e mais 2 dígitos de controle)
     c. Lista de consultas
 
-3. Cada consulta possui os seguintes dados:
+4. Cada consulta possui os seguintes dados:
     a. Data
     b. Horário
     c. Referência para um paciente (por exemplo, o CPF do paciente)
