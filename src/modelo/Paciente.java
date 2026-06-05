@@ -31,9 +31,7 @@ public class Paciente extends PessoaAbstrata implements Serializable {
     @Override
     public void validarIdentificador() throws DadoInvalidoException {
         if (cpf == null || !cpf.matches("\\d{11}")) {
-            throw new DadoInvalidoException(
-                    "CPF inválido para '" + getNome() + "': '" + cpf +
-                            "'. Deve conter exatamente 11 dígitos numéricos.");
+            throw new DadoInvalidoException("CPF inválido para '" + getNome() + "': '" + cpf + "'. Deve conter exatamente 11 dígitos numéricos.");
         }
         if (getNome() == null || getNome().isBlank()) {
             throw new DadoInvalidoException("Nome do paciente não pode ser vazio.");
@@ -42,8 +40,7 @@ public class Paciente extends PessoaAbstrata implements Serializable {
 
     @Override
     public String getResumo() {
-        return String.format("Paciente: %-30s  CPF: %s  Consultas: %d",
-                getNome(), getCpfFormatado(), getConsultas().size());
+        return String.format("Paciente: %-30s  CPF: %s  Consultas: %d", getNome(), getCpfFormatado(), getConsultas().size());
     }
 
     public String getCpf() {

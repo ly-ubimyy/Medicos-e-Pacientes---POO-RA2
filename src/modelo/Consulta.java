@@ -43,8 +43,7 @@ public class Consulta implements Identificavel, Serializable {
         }
         catch (DateTimeParseException e)
         {
-            throw new DadoInvalidoException(
-                    "Data de consulta inválida: '" + s + "'. Formato esperado: dd/MM/yyyy");
+            throw new DadoInvalidoException("Data de consulta inválida: '" + s + "'. Formato esperado: dd/MM/yyyy");
         }
     }
 
@@ -55,15 +54,13 @@ public class Consulta implements Identificavel, Serializable {
         }
         catch (DateTimeParseException e)
         {
-            throw new DadoInvalidoException(
-                    "Horário de consulta inválido: '" + s + "'. Formato esperado: HH:mm");
+            throw new DadoInvalidoException("Horário de consulta inválido: '" + s + "'. Formato esperado: HH:mm");
         }
     }
 
     @Override
     public String getIdentificador() {
-        return data.format(FMT_DATA) + "_" + horario.format(FMT_HORA)
-                + "_med" + codigoMedico + "_pac" + cpfPaciente;
+        return data.format(FMT_DATA) + "_" + horario.format(FMT_HORA) + "_med" + codigoMedico + "_pac" + cpfPaciente;
     }
 
     @Override
@@ -74,20 +71,17 @@ public class Consulta implements Identificavel, Serializable {
     public void validarIdentificador() throws DadoInvalidoException {
         if (codigoMedico <= 0)
         {
-            throw new DadoInvalidoException(
-                    "Código do médico na consulta deve ser positivo. Recebido: " + codigoMedico);
+            throw new DadoInvalidoException("Código do médico na consulta deve ser positivo. Recebido: " + codigoMedico);
         }
         if (cpfPaciente == null || !cpfPaciente.matches("\\d{11}"))
         {
-            throw new DadoInvalidoException(
-                    "CPF do paciente na consulta é inválido: '" + cpfPaciente + "'");
+            throw new DadoInvalidoException("CPF do paciente na consulta é inválido: '" + cpfPaciente + "'");
         }
     }
 
     public boolean isFutura() {
         LocalDate hoje = LocalDate.now();
-        return data.isAfter(hoje) ||
-                (data.isEqual(hoje) && horario.isAfter(LocalTime.now()));
+        return data.isAfter(hoje) || (data.isEqual(hoje) && horario.isAfter(LocalTime.now()));
     }
 
     public boolean isPassada() {
@@ -105,7 +99,6 @@ public class Consulta implements Identificavel, Serializable {
 
     @Override
     public String toString() {
-        return String.format("Consulta: %s às %s | Médico: %d | Paciente: %s",
-                data.format(FMT_DATA), horario.format(FMT_HORA), codigoMedico, cpfPaciente);
+        return String.format("Consulta: %s às %s | Médico: %d | Paciente: %s", data.format(FMT_DATA), horario.format(FMT_HORA), codigoMedico, cpfPaciente);
     }
 }

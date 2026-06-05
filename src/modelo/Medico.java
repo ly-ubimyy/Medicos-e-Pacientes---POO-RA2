@@ -35,8 +35,7 @@ public class Medico extends PessoaAbstrata implements Serializable {
     @Override
     public void validarIdentificador() throws DadoInvalidoException {
         if (codigo <= 0) {
-            throw new DadoInvalidoException(
-                    "Código do médico deve ser um inteiro positivo. Recebido: " + codigo);
+            throw new DadoInvalidoException("Código do médico deve ser um inteiro positivo. Recebido: " + codigo);
         }
         if (getNome() == null || getNome().isBlank()) {
             throw new DadoInvalidoException("Nome do médico não pode ser vazio.");
@@ -45,8 +44,7 @@ public class Medico extends PessoaAbstrata implements Serializable {
 
     @Override
     public String getResumo() {
-        return String.format("Médico: %-30s  Código: %4d  Pacientes: %d  Consultas: %d",
-                getNome(), codigo, pacientes.size(), getConsultas().size());
+        return String.format("Médico: %-30s  Código: %4d  Pacientes: %d  Consultas: %d", getNome(), codigo, pacientes.size(), getConsultas().size());
     }
 
     public int getCodigo() {
@@ -58,7 +56,8 @@ public class Medico extends PessoaAbstrata implements Serializable {
     }
 
     public void adicionarPaciente(Paciente paciente) {
-        if (!pacientes.contains(paciente)) {
+        if (!pacientes.contains(paciente))
+        {
             pacientes.add(paciente);
         }
     }

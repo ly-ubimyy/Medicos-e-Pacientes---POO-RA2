@@ -28,8 +28,7 @@ public class BaseDados implements Serializable {
         return medicos.stream()
                 .filter(m -> m.getCodigo() == codigo)
                 .findFirst()
-                .orElseThrow(() -> new RegistroNaoEncontradoException(
-                        "Médico com código " + codigo + " não encontrado."));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Médico com código " + codigo + " não encontrado."));
     }
 
     /**
@@ -40,8 +39,7 @@ public class BaseDados implements Serializable {
         return pacientes.stream()
                 .filter(p -> p.getCpf().equals(cpfLimpo))
                 .findFirst()
-                .orElseThrow(() -> new RegistroNaoEncontradoException(
-                        "Paciente com CPF " + cpf + " não encontrado."));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Paciente com CPF " + cpf + " não encontrado."));
     }
 
     public void adicionarMedico(Medico m) { medicos.add(m); }
