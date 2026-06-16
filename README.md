@@ -1,4 +1,4 @@
-# M-dicos-e-Pacientes---POO-RA2
+# Medicos-e-Pacientes---POO-RA2
 Médicos e Pacientes - POO RA2
 
 Considere uma aplicação que gerencia dados sobre médicos, pacientes e consulas,
