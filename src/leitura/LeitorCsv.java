@@ -30,7 +30,7 @@ public class LeitorCsv {
         return baseDados;
     }
 
-    // le medicos.cvs | formato: nome,codigo
+    // le medicos.cvs | formato: codigo, nome
     private static void lerMedicos(String caminhoArquivo, BaseDados baseDados)
             throws IOException {
 
@@ -59,8 +59,8 @@ public class LeitorCsv {
                     throw new IOException("Linha inválida no arquivo de médicos: " + linha);
                 }
 
-                String nome = campos[0].trim();
-                int codigo = Integer.parseInt(campos[1].trim());
+                int codigo = Integer.parseInt(campos[0].trim());
+                String nome = campos[1].trim();
 
                 Medico medico = new Medico(nome, codigo);
 
@@ -69,7 +69,7 @@ public class LeitorCsv {
         }
     }
 
-    // le pacientes.csv | formato: nome,cpf
+    // le pacientes.csv | formato: cpf, nome
     private static void lerPacientes(String caminhoArquivo, BaseDados baseDados)
             throws IOException {
 
@@ -95,8 +95,8 @@ public class LeitorCsv {
                     throw new IOException("Linha inválida no arquivo de pacientes: " + linha);
                 }
 
-                String nome = campos[0].trim();
-                String cpf = campos[1].trim();
+                String cpf = campos[0].trim();
+                String nome = campos[1].trim();
 
                 Paciente paciente = new Paciente(nome, cpf);
 
@@ -133,7 +133,7 @@ public class LeitorCsv {
                     throw new IOException("Linha inválida no arquivo de consultas: " + linha);
                 }
 
-                String data = campos[0].trim();
+                String data = converterData(campos[0].trim());
                 String horario = campos[1].trim();
                 int codigoMedico = Integer.parseInt(campos[2].trim());
                 String cpfPaciente = campos[3].trim();
@@ -147,5 +147,13 @@ public class LeitorCsv {
                 baseDados.adicionarConsulta(consulta);
             }
         }
+    }
+    private static String converterData(String data) {
+        if (data.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            String[] partes = data.split("-");
+            return partes[2] + "/" + partes[1] + "/" + partes[0];
+        }
+
+        return data;
     }
 }
