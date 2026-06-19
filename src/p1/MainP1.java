@@ -2,6 +2,9 @@ package p1;
 
 import excecoes.DadoInvalidoException;
 import modelo.BaseDados;
+import excecoes.RegistroNaoEncontradoException;
+import leitura.GravadorBinario;
+import leitura.LeitorCsv;
 import java.io.IOException;
 
 public class MainP1 {
@@ -19,18 +22,36 @@ public class MainP1 {
 
         BaseDados base = new BaseDados();
 
-        try {
 
+        try {
+            // Lê os arquivos CSV de médicos, pacientes e consultas e monta a base de dados em memória
+            base = LeitorCsv.carregarBaseDados(arqMedicos, arqPacientes, arqConsultas);
+
+            // Salva a base de dados em um arquivo binário para ser reutilizada pelo P2
+            GravadorBinario.salvar(base, arqBin);
+
+            System.out.println("Base de dados criada com sucesso.");
+            System.out.println("Médicos: " + base.getMedicos().size());
+            System.out.println("Pacientes: " + base.getPacientes().size());
+            System.out.println("Consultas: " + base.getConsultas().size());
+            System.out.println("Arquivo binário salvo em: " + arqBin);
         }
+
         catch (DadoInvalidoException e)
         {
             System.err.println("[ERRO] Dado inválido: " + e.getMessage());
             System.exit(1);
         }
+        // Trata o erro caso uma consulta faça referência a um médico ou paciente inexistente
+        catch (RegistroNaoEncontradoException e)
+        {
+            System.err.println("[ERRO] Registro não encontrado: " + e.getMessage());
+            System.exit(2);
+        }
         catch (IOException e)
         {
             System.err.println("[ERRO] Arquivo: " + e.getMessage());
-            System.exit(2);
+            System.exit(3);
         }
     }
 }

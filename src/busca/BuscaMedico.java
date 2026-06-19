@@ -1,4 +1,3 @@
-buscaMEDICO
 package busca;
 
 import excecoes.RegistroNaoEncontradoException;
