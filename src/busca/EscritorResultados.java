@@ -3,7 +3,7 @@ package busca;
 import modelo.Consulta;
 import modelo.Medico;
 import modelo.Paciente;
-
+import modelo.PessoaAbstrata;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -65,33 +65,36 @@ public class EscritorResultados {
         }
     }
 
+    // Esse método evita repetir código para médicos e pacientes
+    // e também deixa explícito o uso de abstração/polimorfismo pedido no RA2.
+    public static String formatarPessoas(List<? extends PessoaAbstrata> pessoas) {
+        if (pessoas == null || pessoas.isEmpty()) {
+            return "Nenhuma pessoa encontrada.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // O getResumo chamado depende do tipo real do objeto: Medico ou Paciente.
+        for (PessoaAbstrata pessoa : pessoas) {
+            sb.append(pessoa.getResumo()).append(System.lineSeparator());
+        }
+
+        return sb.toString();
+    }
+
     public static String formatarMedicos(List<Medico> medicos) {
         if (medicos == null || medicos.isEmpty()) {
             return "Nenhum médico encontrado.";
         }
-
-        StringBuilder sb = new StringBuilder();
-
-        for (Medico medico : medicos) {
-            sb.append(medico.getResumo()).append(System.lineSeparator());
-        }
-
-        return sb.toString();
+        return formatarPessoas(medicos);
     }
 
     public static String formatarPacientes(List<Paciente> pacientes) {
         if (pacientes == null || pacientes.isEmpty()) {
             return "Nenhum paciente encontrado.";
         }
-
-        StringBuilder sb = new StringBuilder();
-
-        for (Paciente paciente : pacientes) {
-            sb.append(paciente.getResumo()).append(System.lineSeparator());
-        }
-
-        return sb.toString();
+        return formatarPessoas(pacientes);
     }
+
 
     public static String formatarConsultas(List<Consulta> consultas) {
         if (consultas == null || consultas.isEmpty()) {

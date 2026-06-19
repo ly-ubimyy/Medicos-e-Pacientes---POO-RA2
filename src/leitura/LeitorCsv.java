@@ -139,15 +139,26 @@ public class LeitorCsv {
                 String cpfPaciente = campos[3].trim();
 
                 // antes de criar consulta confere se o médico e o paciente existem
-                baseDados.buscarMedico(codigoMedico);
-                baseDados.buscarPaciente(cpfPaciente);
+                // busca o médico e o paciente antes de criar a consulta.
+                // isso garante que a consulta só seja criada se os dois registros existirem na base.
+                Medico medico = baseDados.buscarMedico(codigoMedico);
+                Paciente paciente = baseDados.buscarPaciente(cpfPaciente);
 
                 Consulta consulta = new Consulta(data, horario, codigoMedico, cpfPaciente);
 
+                // adiciona a consulta na lista geral da base de dados.
                 baseDados.adicionarConsulta(consulta);
+
+                // Guarda a consulta também dentro do médico e do paciente,
+                // porque antes ela ficava só na lista geral da base.
+                medico.adicionarConsulta(consulta);
+                paciente.adicionarConsulta(consulta);
+                // liga o medico ao paciente
+                medico.adicionarPaciente(paciente);
             }
         }
     }
+
     private static String converterData(String data) {
         if (data.matches("\\d{4}-\\d{2}-\\d{2}")) {
             String[] partes = data.split("-");
