@@ -13,7 +13,6 @@ import java.io.IOException;
 
 public class LeitorCsv {
 
-    // le os 3 arquivos eretorna na BaseDados
     public static BaseDados carregarBaseDados(
             String caminhoMedicos,
             String caminhoPacientes,
@@ -21,8 +20,6 @@ public class LeitorCsv {
     ) throws IOException, DadoInvalidoException, RegistroNaoEncontradoException {
 
         BaseDados baseDados = new BaseDados();
-
-        // medico -> pacientes -> consultas (ordem pq cosnulta depende das 2)
         lerMedicos(caminhoMedicos, baseDados);
         lerPacientes(caminhoPacientes, baseDados);
         lerConsultas(caminhoConsultas, baseDados);
@@ -30,7 +27,6 @@ public class LeitorCsv {
         return baseDados;
     }
 
-    // le medicos.cvs | formato: codigo, nome
     private static void lerMedicos(String caminhoArquivo, BaseDados baseDados)
             throws IOException {
 
@@ -41,12 +37,10 @@ public class LeitorCsv {
 
             while ((linha = reader.readLine()) != null) {
 
-                //linha vazia = pula
                 if (linha.isBlank()) {
                     continue;
                 }
 
-                // pula cabeçalho
                 if (primeiraLinha) {
                     primeiraLinha = false;
                     continue;
@@ -54,7 +48,6 @@ public class LeitorCsv {
 
                 String[] campos = linha.split(",");
 
-                // se ñ tem os 2 campor, ta errado
                 if (campos.length != 2) {
                     throw new IOException("Linha inválida no arquivo de médicos: " + linha);
                 }
@@ -69,7 +62,6 @@ public class LeitorCsv {
         }
     }
 
-    // le pacientes.csv | formato: cpf, nome
     private static void lerPacientes(String caminhoArquivo, BaseDados baseDados)
             throws IOException {
 
@@ -104,9 +96,6 @@ public class LeitorCsv {
             }
         }
     }
-
-    // le consultas.csv | formato: data,horario,codigoMedico,cpfPaciente
-    //data no formato dd/mm/aaaa
     private static void lerConsultas(String caminhoArquivo, BaseDados baseDados)
             throws IOException, DadoInvalidoException, RegistroNaoEncontradoException {
 
@@ -128,7 +117,6 @@ public class LeitorCsv {
 
                 String[] campos = linha.split(",");
 
-                // essa tem que ter 4 campos, se não, ta errado
                 if (campos.length != 4) {
                     throw new IOException("Linha inválida no arquivo de consultas: " + linha);
                 }
@@ -138,22 +126,15 @@ public class LeitorCsv {
                 int codigoMedico = Integer.parseInt(campos[2].trim());
                 String cpfPaciente = campos[3].trim();
 
-                // antes de criar consulta confere se o médico e o paciente existem
-                // busca o médico e o paciente antes de criar a consulta.
-                // isso garante que a consulta só seja criada se os dois registros existirem na base.
                 Medico medico = baseDados.buscarMedico(codigoMedico);
                 Paciente paciente = baseDados.buscarPaciente(cpfPaciente);
 
                 Consulta consulta = new Consulta(data, horario, codigoMedico, cpfPaciente);
 
-                // adiciona a consulta na lista geral da base de dados.
                 baseDados.adicionarConsulta(consulta);
 
-                // Guarda a consulta também dentro do médico e do paciente,
-                // porque antes ela ficava só na lista geral da base.
                 medico.adicionarConsulta(consulta);
                 paciente.adicionarConsulta(consulta);
-                // liga o medico ao paciente
                 medico.adicionarPaciente(paciente);
             }
         }

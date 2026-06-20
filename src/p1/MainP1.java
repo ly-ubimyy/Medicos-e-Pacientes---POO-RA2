@@ -24,10 +24,8 @@ public class MainP1 {
 
 
         try {
-            // Lê os arquivos CSV de médicos, pacientes e consultas e monta a base de dados em memória
             base = LeitorCsv.carregarBaseDados(arqMedicos, arqPacientes, arqConsultas);
 
-            // Salva a base de dados em um arquivo binário para ser reutilizada pelo P2
             GravadorBinario.salvar(base, arqBin);
 
             System.out.println("Base de dados criada com sucesso.");
@@ -42,7 +40,6 @@ public class MainP1 {
             System.err.println("[ERRO] Dado inválido: " + e.getMessage());
             System.exit(1);
         }
-        // Trata o erro caso uma consulta faça referência a um médico ou paciente inexistente
         catch (RegistroNaoEncontradoException e)
         {
             System.err.println("[ERRO] Registro não encontrado: " + e.getMessage());

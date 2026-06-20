@@ -17,7 +17,6 @@ public class EscritorResultados {
     private static final DateTimeFormatter FORMATO_DATA_HORA =
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-    // Escreve um resultado em arquivo txt.
     public static void salvarResultado(String caminhoArquivo, String tituloBusca, String resultado)
             throws IOException {
 
@@ -65,15 +64,12 @@ public class EscritorResultados {
         }
     }
 
-    // Esse método evita repetir código para médicos e pacientes
-    // e também deixa explícito o uso de abstração/polimorfismo pedido no RA2.
     public static String formatarPessoas(List<? extends PessoaAbstrata> pessoas) {
         if (pessoas == null || pessoas.isEmpty()) {
             return "Nenhuma pessoa encontrada.";
         }
 
         StringBuilder sb = new StringBuilder();
-        // O getResumo chamado depende do tipo real do objeto: Medico ou Paciente.
         for (PessoaAbstrata pessoa : pessoas) {
             sb.append(pessoa.getResumo()).append(System.lineSeparator());
         }

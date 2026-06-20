@@ -12,7 +12,6 @@ import java.util.List;
 
 public class BuscaPaciente {
 
-    // busca um paciente dentro da base de dados pelo CPF
     public static Paciente buscarPacientePorCpf(BaseDados baseDados, String cpfPaciente)
             throws RegistroNaoEncontradoException {
 
@@ -20,10 +19,8 @@ public class BuscaPaciente {
             throw new RegistroNaoEncontradoException("CPF do paciente não informado.");
         }
 
-        // remove pontos, traços e qualquer outro caractere que não seja número
         String cpfLimpo = cpfPaciente.replaceAll("[^0-9]", "");
 
-        // percorre a coleção de pacientes cadastrados
         for (Paciente paciente : baseDados.getPacientes()) {
             if (paciente.getCpf().equals(cpfLimpo)) {
                 return paciente;
@@ -35,7 +32,6 @@ public class BuscaPaciente {
         );
     }
 
-    // busca médicos com quem o paciente já se consultou ou tem consulta agendada.
     public static List<Medico> listarMedicosDoPaciente(BaseDados baseDados, String cpfPaciente)
             throws RegistroNaoEncontradoException {
 
@@ -48,14 +44,12 @@ public class BuscaPaciente {
             if (mesmoPaciente) {
                 Medico medico = baseDados.buscarMedico(consulta.getCodigoMedico());
 
-                // evita repetir o mesmo médico caso exista mais de uma consulta com ele
                 if (!medicos.contains(medico)) {
                     medicos.add(medico);
                 }
             }
         }
 
-        // deixa o resultado organizado por nome
         medicos.sort(Comparator.comparing(Medico::getNome));
         return medicos;
     }
@@ -67,8 +61,6 @@ public class BuscaPaciente {
     ) throws RegistroNaoEncontradoException {
 
         Paciente paciente = buscarPacientePorCpf(baseDados, cpfPaciente);
-
-        // verifica se o médico existe, se não existir, chama a exceção com throws
         baseDados.buscarMedico(codigoMedico);
 
         List<Consulta> consultasEncontradas = new ArrayList<>();

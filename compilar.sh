@@ -1,6 +1,7 @@
 #!/bin/bash
-# Compila e executa o P1.
-# Uso: ./compilar.sh
+# Compila o projeto e executa o P1 (e opcionalmente o P2).
+# Uso: ./compilar.sh        -> compila e roda só o P1
+#      ./compilar.sh p2     -> compila, roda o P1 e depois abre o P2 (GUI)
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 SRC="$ROOT/src"
@@ -34,3 +35,8 @@ if [ $? -ne 0 ]; then echo "[ERRO] Falha na compilação."; exit 1; fi
 echo "=== OK — Rodando P1 ==="
 cd "$ROOT"
 java -cp "$BIN" p1.MainP1
+
+if [ "$1" == "p2" ]; then
+  echo "=== Abrindo P2 (interface gráfica) ==="
+  java -cp "$BIN" p2.MainP2
+fi
