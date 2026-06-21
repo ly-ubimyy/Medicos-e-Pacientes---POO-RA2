@@ -71,6 +71,10 @@ public class EscritorResultados {
 
         StringBuilder sb = new StringBuilder();
         for (PessoaAbstrata pessoa : pessoas) {
+            // Chamada polimórfica:
+            // pessoa pode ser Medico ou Paciente.
+            // O método getResumo() executado depende
+            // do tipo real do objeto em tempo de execução.
             sb.append(pessoa.getResumo()).append(System.lineSeparator());
         }
 
