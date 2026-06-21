@@ -169,7 +169,7 @@ public class TelaPaciente extends JFrame {
 
         JPanel painel = new JPanel(new BorderLayout(5, 5));
         painel.setBorder(BorderFactory.createTitledBorder("Resultado"));
-        p.setBackground(Color.WHITE);
+        painel.setBackground(Color.WHITE);
 
         areaResultado = new JTextArea();
         areaResultado.setEditable(false);
